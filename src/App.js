@@ -16,18 +16,24 @@ function TodoForm({ onAddTask }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Generate a unique id for the new task
+    const taskId = new Date().getTime().toString();
+
     // Check if the task and the assignee are not empty
     if (task && assignee) {
       //  Create a task object contains the task and assignee values
       // also set the value of the ke (isDone) to false
       const newTaskObj = {
+        id: taskId,
         task: task,
         assignee: assignee,
         isDone: false,
       };
 
       // Call the onAddTask callback function with the new task object as an argument
-      onAddTask(newTaskObj);
+      if (onAddTask) {
+        onAddTask(newTaskObj);
+      }
 
       // set the task and the assignee values back to an empty String
       setTask("");
@@ -55,20 +61,37 @@ function TodoForm({ onAddTask }) {
   );
 }
 
-function TaskListRender({ tasks }) {
+function TaskListRender({ tasks, onTaskDone }) {
+  const handleTaskDone = (taskId) => {
+    // Find the index of the task with the given taskId
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    if (taskIndex !== -1) {
+      // Update the isDone property of the task to true
+      const updatedTask = { ...tasks[taskIndex], isDone: true };
+      // Invoke the callback function with the updated task object
+      if (onTaskDone) {
+        onTaskDone(taskId, updatedTask);
+      }
+    }
+
+    console.log(tasks);
+  };
+
   return (
     <ul>
-      {tasks.map((task, index) => (
-        <li key={index}>
+      {tasks.map((task) => (
+        <li key={task.id}>
           <p>Task: {task.task}</p>
           <p>Assignee: {task.assignee}</p>
+          {/* Add "Done" button */}
+          <button onClick={() => handleTaskDone(task.id)}>Done</button>
         </li>
       ))}
     </ul>
   );
 }
 
-function TaskSearch({ tasks }) {
+function TaskSearch({ tasks, onTaskDone }) {
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = (e) => {
@@ -90,7 +113,7 @@ function TaskSearch({ tasks }) {
         placeholder="Search tasks..."
       />
       {/* Render the filtered tasks using TaskListRender component */}
-      <TaskListRender tasks={filteredTasks} />
+      <TaskListRender tasks={filteredTasks} onTaskDone={onTaskDone} />
     </div>
   );
 }
@@ -105,12 +128,24 @@ function App() {
     setTasks([...tasks, taskObj]);
   };
 
+  // Define the onTaskDone callback function
+  const handleTaskDone = (taskId, updatedTask) => {
+    // Find the index of the task with the given taskId
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    if (taskIndex !== -1) {
+      // Update the tasks array with the updated task object
+      const updatedTasks = [...tasks];
+      updatedTasks[taskIndex] = updatedTask;
+      setTasks(updatedTasks);
+    }
+  };
+
   return (
     <div>
       {/*render the main form from (TodoForm) component*/}
       <TodoForm onAddTask={handleAddTask} />
       {/* Render the search box  from TaskSearch component */}
-      <TaskSearch tasks={tasks} />
+      <TaskSearch tasks={tasks} onTaskDone={handleTaskDone} />
       {/*render the tasks form (TaskListRender) component*/}
     </div>
   );
