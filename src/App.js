@@ -73,8 +73,6 @@ function TaskListRender({ tasks, onTaskDone }) {
         onTaskDone(taskId, updatedTask);
       }
     }
-
-    console.log(tasks);
   };
 
   return (
@@ -118,6 +116,20 @@ function TaskSearch({ tasks, onTaskDone }) {
   );
 }
 
+function TaskCounter({ tasks }) {
+  // Filter tasks based on isDone property
+  const todoTasks = tasks.filter((task) => !task.isDone);
+  const doneTasks = tasks.filter((task) => task.isDone);
+
+  return (
+    <div>
+      <p>Total Tasks : {tasks.length}</p>
+      <p>toDo : {todoTasks.length}</p>
+      <p>Done : {doneTasks.length}</p>
+    </div>
+  );
+}
+
 function App() {
   // Array of tasks
   const [tasks, setTasks] = useState([]);
@@ -146,7 +158,8 @@ function App() {
       <TodoForm onAddTask={handleAddTask} />
       {/* Render the search box  from TaskSearch component */}
       <TaskSearch tasks={tasks} onTaskDone={handleTaskDone} />
-      {/*render the tasks form (TaskListRender) component*/}
+      {/*render the tasks counter form (TaskCounter) component*/}
+      <TaskCounter tasks={tasks} />
     </div>
   );
 }
