@@ -68,6 +68,33 @@ function TaskListRender({ tasks }) {
   );
 }
 
+function TaskSearch({ tasks }) {
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task.task.toLowerCase().includes(searchText.toLowerCase()) ||
+      task.assignee.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchText}
+        onChange={handleSearch}
+        placeholder="Search tasks..."
+      />
+      {/* Render the filtered tasks using TaskListRender component */}
+      <TaskListRender tasks={filteredTasks} />
+    </div>
+  );
+}
+
 function App() {
   // Array of tasks
   const [tasks, setTasks] = useState([]);
@@ -80,10 +107,11 @@ function App() {
 
   return (
     <div>
-      {/*render the todo form  from component*/}
+      {/*render the main form from (TodoForm) component*/}
       <TodoForm onAddTask={handleAddTask} />
-      {/*render the tasks form tasks component*/}
-      <TaskListRender tasks={tasks} />
+      {/* Render the search box  from TaskSearch component */}
+      <TaskSearch tasks={tasks} />
+      {/*render the tasks form (TaskListRender) component*/}
     </div>
   );
 }
