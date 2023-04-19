@@ -1,38 +1,82 @@
-.App {
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  background-image: linear-gradient(#0dccea, #0d70ea);
+  border: 0;
+  border-radius: 0.25em;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0.3125em 0.9375em;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.875em 1.25em;
   text-align: center;
+  font-weight: bold;
+  width: 100%;
+  margin: 0.5em 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.default-box {
+  border: 2px solid black;
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: flex-start;
 }
 
-.App-link {
-  color: #61dafb;
+input {
+  width: 100%;
+  padding: 0.75em 1.25em;
+  margin: 0.5em 0;
+  display: inline-block;
+  border: 0.0625em solid #ccc;
+  border-radius: 0.1875em;
+  box-sizing: border-box;
+  font-size: 1.2em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*             TodoForm Component             */
+
+/*             TaskVisibilityToggle  Component             */
+
+.task-visibility-toggle {
+  margin: 0.5em;
+}
+
+/*             TaskSearch   Component             */
+
+/*             TaskCounter   Component             */
+
+.TaskCounter {
+  margin-top: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+  background-image: linear-gradient(#0dccea, #0d70ea);
+  color: #0a0a0a;
+}
+
+.TaskCounter p {
+  border-bottom: 0.3125em solid #0a0a0a;
+}
+
+/*             TaskListRender   Component             */
+
+.TaskListRender {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  list-style-type: none;
+  /* margin: 0.5em; */
+}
+
+.TaskListRender span {
+  font-weight: bold;
+}
+
+.TaskListRender li {
+  border-bottom: 0.1em solid #0a0a0a;
 }

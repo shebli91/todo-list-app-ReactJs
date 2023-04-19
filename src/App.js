@@ -42,7 +42,7 @@ function TodoForm({ onAddTask }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="default-box todo-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="task"
@@ -58,6 +58,18 @@ function TodoForm({ onAddTask }) {
       ></input>
       <button type="submit">Add</button>
     </form>
+  );
+}
+
+function TaskVisibilityToggle({ showTasks, setShowTasks }) {
+  const handleClick = () => {
+    setShowTasks(!showTasks);
+  };
+
+  return (
+    <div className="task-visibility-toggle">
+      <button onClick={handleClick}>{showTasks ? "Hide" : "Show"} Tasks</button>
+    </div>
   );
 }
 
@@ -78,11 +90,15 @@ function TaskListRender({ tasks, onTaskDone }) {
   const filteredTasks = tasks.filter((task) => !task.isDone);
 
   return (
-    <ul>
+    <ul className="TaskListRender">
       {filteredTasks.map((task) => (
         <li key={task.id}>
-          <p>Task: {task.task}</p>
-          <p>Assignee: {task.assignee}</p>
+          <p>
+            <span>Task: </span> {task.task}
+          </p>
+          <p>
+            <span>Assignee: </span> {task.assignee}
+          </p>
           {/* Add "Done" button */}
           <button onClick={() => handleTaskDone(task.id)}>Done</button>
         </li>
@@ -105,7 +121,7 @@ function TaskSearch({ tasks, onTaskDone }) {
   );
 
   return (
-    <div>
+    <div className="default-box TaskSearch">
       <input
         type="text"
         value={searchText}
@@ -124,22 +140,10 @@ function TaskCounter({ tasks }) {
   const doneTasks = tasks.filter((task) => task.isDone);
 
   return (
-    <div>
+    <div className="default-box TaskCounter">
       <p>Total Tasks : {tasks.length}</p>
       <p>toDo : {todoTasks.length}</p>
       <p>Done : {doneTasks.length}</p>
-    </div>
-  );
-}
-
-function TaskVisibilityToggle({ showTasks, setShowTasks }) {
-  const handleClick = () => {
-    setShowTasks(!showTasks);
-  };
-
-  return (
-    <div>
-      <button onClick={handleClick}>{showTasks ? "Hide" : "Show"} Tasks</button>
     </div>
   );
 }
@@ -173,7 +177,6 @@ function App() {
       {/*render the main form from (TodoForm) component*/}
       <TodoForm onAddTask={handleAddTask} />
       <TaskVisibilityToggle showTasks={showTasks} setShowTasks={setShowTasks} />
-
       {/* Render the search box  from TaskSearch component */}
       {showTasks && <TaskSearch tasks={tasks} onTaskDone={handleTaskDone} />}
       {/*render the tasks counter form (TaskCounter) component*/}
