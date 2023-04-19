@@ -75,9 +75,11 @@ function TaskListRender({ tasks, onTaskDone }) {
     }
   };
 
+  const filteredTasks = tasks.filter((task) => !task.isDone);
+
   return (
     <ul>
-      {tasks.map((task) => (
+      {filteredTasks.map((task) => (
         <li key={task.id}>
           <p>Task: {task.task}</p>
           <p>Assignee: {task.assignee}</p>
