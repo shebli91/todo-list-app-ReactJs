@@ -132,9 +132,23 @@ function TaskCounter({ tasks }) {
   );
 }
 
+function TaskVisibilityToggle({ showTasks, setShowTasks }) {
+  const handleClick = () => {
+    setShowTasks(!showTasks);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>{showTasks ? "Hide" : "Show"} Tasks</button>
+    </div>
+  );
+}
+
 function App() {
   // Array of tasks
   const [tasks, setTasks] = useState([]);
+
+  const [showTasks, setShowTasks] = useState(true);
 
   // Define the onAddTask callback function
   const handleAddTask = (taskObj) => {
@@ -158,8 +172,10 @@ function App() {
     <div>
       {/*render the main form from (TodoForm) component*/}
       <TodoForm onAddTask={handleAddTask} />
+      <TaskVisibilityToggle showTasks={showTasks} setShowTasks={setShowTasks} />
+
       {/* Render the search box  from TaskSearch component */}
-      <TaskSearch tasks={tasks} onTaskDone={handleTaskDone} />
+      {showTasks && <TaskSearch tasks={tasks} onTaskDone={handleTaskDone} />}
       {/*render the tasks counter form (TaskCounter) component*/}
       <TaskCounter tasks={tasks} />
     </div>
