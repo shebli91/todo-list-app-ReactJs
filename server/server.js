@@ -16,7 +16,7 @@ app.get("/todos", (req, res) => {
 
 app.post("/todos", (req, res) => {
   const { task, assignee } = req.body;
-  const taskId = new Date().getTime().toString();
+  const taskId = new Date().getTime();
   const newTodo = {
     id: taskId,
     task: task,
