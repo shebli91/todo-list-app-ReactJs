@@ -22,7 +22,7 @@ function TodoForm({ onAddTask }) {
       const newTodo = { task, assignee };
 
       // Make a POST request to the server to add the new task
-      fetch("http://localhost:5000/todos", {
+      fetch("https://nodejs-reactjs-todo-list-app.onrender.com/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,13 +88,16 @@ function TaskListRender({ tasks, onTaskDone }) {
 
       try {
         // Send a PUT request to the server to update the task as done
-        await fetch(`http://localhost:5000/todos/${taskId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedTask),
-        });
+        await fetch(
+          `https://nodejs-reactjs-todo-list-app.onrender.com/todos/${taskId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedTask),
+          }
+        );
 
         // Invoke the callback function with the updated task object
         if (onTaskDone) {
@@ -176,7 +179,7 @@ function App() {
 
   useEffect(() => {
     // Make a GET request to the server to fetch the tasks
-    fetch("http://localhost:5000/todos")
+    fetch("https://nodejs-reactjs-todo-list-app.onrender.com/todos")
       .then((response) => response.json())
       .then((data) => {
         setTasks(data);
